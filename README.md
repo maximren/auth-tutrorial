@@ -35,7 +35,7 @@ yarn && yarn start
 ```
 
 
-#Signin
+# Signin
 
 `POST` `/signin`
 
@@ -57,7 +57,7 @@ yarn && yarn start
 }
 ```
 
-#Posts
+# Posts
 
 *testing endpoint*
 `GET` `/posts`
