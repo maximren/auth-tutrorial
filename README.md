@@ -1,7 +1,7 @@
 # express-jwt practice
 learning for authorization flow (jwt)
 
-#Start server
+# Start server
 
 ```
 yarn && yarn start
