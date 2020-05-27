@@ -1,31 +1,18 @@
 import { Request, Response } from 'express';
 import User from '../models/User';
+import paginationOptions from '../helpers/pagination';
 
 const getUsers = async (req: Request, res: Response) => {
-  res.header('Access-Control-Allow-Origin', '*');
-
-  const page: any = parseInt(req.query.page as any);
-  const limit: number = parseInt(req.query.limit as any);
-
-  const startIndex = (page - 1) * limit;
-  const endIndex = page * limit
-
-  let next = {};
-
-  if (endIndex < (await User.find()).length) {
-    next = {
-      page: page + 1,
-      limit
-    }
-  }
-
   try {
-    const users = await User.find().select('-password').limit(limit).skip(startIndex).exec();
-    
+    const users = await User.find({}, '-password', {
+      ...paginationOptions(req.query),
+      sort: {
+        date: -1,
+      },
+    });
     res.send({
       status: 200,
       users,
-      next
     });
   } catch (error) {
     console.log(error);
@@ -60,7 +47,9 @@ const editUser = async (req: Request, res: Response) => {
       {
         $set: {
           ...(req.body.name ? { name: req.body.name } : {}),
-          ...(req.body.empDepartment ? { empDepartment: req.body.empDepartment } : {}),
+          ...(req.body.empDepartment
+            ? { empDepartment: req.body.empDepartment }
+            : {}),
           ...(req.body.empActive ? { empActive: req.body.empActive } : {}),
         },
       },
