@@ -5,6 +5,8 @@ const validateSignup = (data) => {
     name: Joi.string().min(3).required(),
     email: Joi.string().min(8).required().email(),
     password: Joi.string().min(6).max(1024).required(),
+    empDepartment: Joi.string().required(),
+    empActive: Joi.boolean().required()
   });
 
   return schema.validate(data);

@@ -14,6 +14,8 @@ const signup = async (req: Request, res: Response) => {
     name: req.body.name,
     email: req.body.email,
     password: hashPassword,
+    empDepartment: req.body.empDepartment,
+    empActive: req.body.empActive
   });
 
   const { error } = await validateSignup(req.body);
@@ -45,6 +47,8 @@ const signup = async (req: Request, res: Response) => {
 const signin = async (req: Request, res: Response) => {
   const { error } = await validateSignip(req.body);
 
+  console.log(req.body)
+
   if (error) {
     return res.send({
       status: 400,
@@ -75,7 +79,8 @@ const signin = async (req: Request, res: Response) => {
     res.header('Authorization', genJwt);
     res.send({
       status: 200,
-      message: "Success"
+      message: genJwt,
+      id: user._id,
     })
   } catch (error) {
     console.log(error);

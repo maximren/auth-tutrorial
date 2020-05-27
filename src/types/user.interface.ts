@@ -5,4 +5,6 @@ export interface IUser extends Document {
   emal: string;
   password: string;
   date: Date;
+  empDepartment: string;
+  empActive: boolean;
 }
